@@ -1,0 +1,40 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "db-migration-validator"
+version = "0.1.0"
+description = "Prove a database migration lost nothing: structure, row counts, order-independent content fingerprints and grants"
+readme = "README.md"
+license = "MIT"
+authors = [{ name = "Ignacio Mendoza Rojas" }]
+requires-python = ">=3.11"
+dependencies = ["SQLAlchemy>=2.0"]
+
+[project.optional-dependencies]
+oracle = ["oracledb>=2.0"]
+sqlserver = ["pyodbc>=5.0"]
+postgres = ["psycopg[binary]>=3.1"]
+dev = ["pytest>=8.0", "ruff>=0.5"]
+
+[project.scripts]
+dbmv = "dbmv.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/dbmv"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["E501"]
+"examples/*" = ["E501"]
