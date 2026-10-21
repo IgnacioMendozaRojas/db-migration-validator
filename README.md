@@ -4,6 +4,20 @@
 ![Python](https://img.shields.io/badge/python-3.11%20|%203.12%20|%203.13-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
+**Data engineering and controls.** A tool that proves a database migration lost nothing, built from the checks I needed when validating a production migration in a bank's risk area.
+
+## What this shows
+
+| Task in a migration or data-control team | Where it is done here |
+|---|---|
+| Sign off a migration with evidence | Before/after snapshots as plain JSON, archived for audit, and a Markdown comparison report |
+| Gate a cutover automatically | `dbmv compare` exits with code 1 on any critical finding |
+| Catch silent content changes (lost decimals, encodings, truncation) | Order-independent content fingerprints per table |
+| Check that access survived | Grants compared user by user |
+| Work across engines | Oracle, SQL Server, PostgreSQL and MySQL through SQLAlchemy |
+
+## Why
+
 Moving a database to a new server, a new engine or a new version is easy to do and hard
 to *prove*. Row counts match and the cutover is declared a success; a week later someone
 notices that a nightly job cannot read a table because a grant was not recreated, or that
